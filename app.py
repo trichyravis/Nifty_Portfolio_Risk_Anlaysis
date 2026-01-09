@@ -1,3 +1,4 @@
+
 """
 Portfolio Performance Risk Analysis Application
 The Mountain Path - World of Finance
@@ -10,6 +11,7 @@ import numpy as np
 import yfinance as yf
 from datetime import datetime, timedelta
 import plotly.graph_objects as go
+from io import BytesIO
 
 # Import custom modules
 from config import *
@@ -107,25 +109,37 @@ if analyze_button and selected_stocks and abs(sum(weights.values()) - 100) <= 0.
         }
         start_date = end_date - timedelta(days=period_map[period])
         
-        # Fetch stock data
-        stock_data = yf.download(
+        # Robust Fetch stock data
+        raw_stock_download = yf.download(
             selected_stocks,
             start=start_date,
             end=end_date,
-            progress=False
-        )['Adj Close']
+            progress=False,
+            auto_adjust=False
+        )
         
+        if 'Adj Close' in raw_stock_download.columns:
+            stock_data = raw_stock_download['Adj Close']
+        else:
+            stock_data = raw_stock_download['Close']
+            
         if len(selected_stocks) == 1:
             stock_data = pd.DataFrame(stock_data)
             stock_data.columns = selected_stocks
         
-        # Fetch benchmark data
-        benchmark_data = yf.download(
+        # Robust Fetch benchmark data
+        raw_bench_download = yf.download(
             RISK_PARAMS['benchmark_index'],
             start=start_date,
             end=end_date,
-            progress=False
-        )['Adj Close']
+            progress=False,
+            auto_adjust=False
+        )
+        
+        if 'Adj Close' in raw_bench_download.columns:
+            benchmark_data = raw_bench_download['Adj Close']
+        else:
+            benchmark_data = raw_bench_download['Close']
         
         benchmark_returns = benchmark_data.pct_change().dropna()
         
@@ -230,7 +244,7 @@ if st.session_state.portfolio_data:
         cumulative_returns = (1 + data['portfolio_returns']).cumprod()
         cumulative_df = pd.DataFrame({
             'Portfolio': (cumulative_returns - 1) * 100
-        })
+        }, index=cumulative_returns.index)
         
         # Add individual stock returns
         for stock in data['selected_stocks']:
@@ -279,12 +293,10 @@ if st.session_state.portfolio_data:
             var_99_daily = data['metrics']['VaR 99%'] * 100
             
             st.info(f"""
-            **95% Confidence Level**  
-            Daily VaR: {var_95_daily:.2f}%  
+            **95% Confidence Level** Daily VaR: {var_95_daily:.2f}%  
             Monthly VaR: {var_95_daily * np.sqrt(21):.2f}%  
             
-            **99% Confidence Level**  
-            Daily VaR: {var_99_daily:.2f}%  
+            **99% Confidence Level** Daily VaR: {var_99_daily:.2f}%  
             Monthly VaR: {var_99_daily * np.sqrt(21):.2f}%
             """)
         
@@ -295,12 +307,10 @@ if st.session_state.portfolio_data:
             es_99_daily = data['metrics']['ES 99%'] * 100
             
             st.warning(f"""
-            **95% Confidence Level**  
-            Daily ES: {es_95_daily:.2f}%  
+            **95% Confidence Level** Daily ES: {es_95_daily:.2f}%  
             Monthly ES: {es_95_daily * np.sqrt(21):.2f}%  
             
-            **99% Confidence Level**  
-            Daily ES: {es_99_daily:.2f}%  
+            **99% Confidence Level** Daily ES: {es_99_daily:.2f}%  
             Monthly ES: {es_99_daily * np.sqrt(21):.2f}%
             """)
         
@@ -321,20 +331,20 @@ if st.session_state.portfolio_data:
         
         with col1:
             st.metric("Standard Deviation", 
-                     f"{data['portfolio_returns'].std()*100:.3f}%")
+                      f"{data['portfolio_returns'].std()*100:.3f}%")
         
         with col2:
             st.metric("Skewness", 
-                     f"{data['metrics']['Skewness']:.3f}")
+                      f"{data['metrics'].get('Skewness', 0):.3f}")
         
         with col3:
             st.metric("Kurtosis", 
-                     f"{data['metrics']['Kurtosis']:.3f}")
+                      f"{data['metrics'].get('Kurtosis', 0):.3f}")
         
         with col4:
             if 'Beta' in data['metrics']:
                 st.metric("Beta", 
-                         f"{data['metrics']['Beta']:.3f}")
+                          f"{data['metrics']['Beta']:.3f}")
     
     with tab4:
         st.markdown("### Drawdown Analysis")
@@ -351,7 +361,7 @@ if st.session_state.portfolio_data:
         
         with col1:
             st.metric("Maximum Drawdown", 
-                     f"{data['metrics']['Max Drawdown']*100:.2f}%")
+                      f"{data['metrics']['Max Drawdown']*100:.2f}%")
         
         with col2:
             recovery_periods = []
@@ -373,12 +383,12 @@ if st.session_state.portfolio_data:
             
             avg_recovery = np.mean(recovery_periods) if recovery_periods else 0
             st.metric("Avg Recovery Period", 
-                     f"{avg_recovery:.0f} days")
+                      f"{avg_recovery:.0f} days")
         
         with col3:
             current_dd = drawdown_series.iloc[-1] * 100
             st.metric("Current Drawdown", 
-                     f"{current_dd:.2f}%")
+                      f"{current_dd:.2f}%")
         
         # Drawdown Distribution
         st.markdown("#### Drawdown Distribution")
@@ -423,8 +433,7 @@ if st.session_state.portfolio_data:
             avg_corr = correlation_matrix.where(mask).stack().mean()
             
             st.info(f"""
-            **Portfolio Diversification Metrics**  
-            Average Pairwise Correlation: {avg_corr:.3f}  
+            **Portfolio Diversification Metrics** Average Pairwise Correlation: {avg_corr:.3f}  
             Max Correlation: {correlation_matrix.where(mask).max().max():.3f}  
             Min Correlation: {correlation_matrix.where(mask).min().min():.3f}
             """)
@@ -439,16 +448,15 @@ if st.session_state.portfolio_data:
                         'Correlation': correlation_matrix.iloc[i, j]
                     })
             
-            corr_pairs_df = pd.DataFrame(corr_pairs).sort_values('Correlation', ascending=False)
-            
-            st.warning(f"""
-            **Correlation Pairs**  
-            Highest: {corr_pairs_df.iloc[0]['Pair']}  
-            ({corr_pairs_df.iloc[0]['Correlation']:.3f})  
-            
-            Lowest: {corr_pairs_df.iloc[-1]['Pair']}  
-            ({corr_pairs_df.iloc[-1]['Correlation']:.3f})
-            """)
+            if corr_pairs:
+                corr_pairs_df = pd.DataFrame(corr_pairs).sort_values('Correlation', ascending=False)
+                st.warning(f"""
+                **Correlation Pairs** Highest: {corr_pairs_df.iloc[0]['Pair']}  
+                ({corr_pairs_df.iloc[0]['Correlation']:.3f})  
+                
+                Lowest: {corr_pairs_df.iloc[-1]['Pair']}  
+                ({corr_pairs_df.iloc[-1]['Correlation']:.3f})
+                """)
     
     with tab6:
         st.markdown("### Detailed Portfolio Report")
@@ -472,7 +480,7 @@ if st.session_state.portfolio_data:
         # Detailed Metrics Table
         st.markdown("#### Complete Risk-Return Metrics")
         
-        metrics_df = pd.DataFrame([
+        metrics_list = [
             {'Metric': 'Annual Return', 'Value': f"{data['metrics']['Annual Return']*100:.2f}%", 'Category': 'Return'},
             {'Metric': 'Volatility (Annual)', 'Value': f"{data['metrics']['Volatility']*100:.2f}%", 'Category': 'Risk'},
             {'Metric': 'Sharpe Ratio', 'Value': f"{data['metrics']['Sharpe Ratio']:.3f}", 'Category': 'Risk-Adjusted'},
@@ -483,35 +491,28 @@ if st.session_state.portfolio_data:
             {'Metric': 'Expected Shortfall (95%)', 'Value': f"{data['metrics']['ES 95%']*100:.2f}%", 'Category': 'Risk'},
             {'Metric': 'Expected Shortfall (99%)', 'Value': f"{data['metrics']['ES 99%']*100:.2f}%", 'Category': 'Risk'},
             {'Metric': 'Maximum Drawdown', 'Value': f"{data['metrics']['Max Drawdown']*100:.2f}%", 'Category': 'Risk'},
-            {'Metric': 'Skewness', 'Value': f"{data['metrics']['Skewness']:.3f}", 'Category': 'Distribution'},
-            {'Metric': 'Kurtosis', 'Value': f"{data['metrics']['Kurtosis']:.3f}", 'Category': 'Distribution'},
-        ])
+            {'Metric': 'Skewness', 'Value': f"{data['metrics'].get('Skewness', 0):.3f}", 'Category': 'Distribution'},
+            {'Metric': 'Kurtosis', 'Value': f"{data['metrics'].get('Kurtosis', 0):.3f}", 'Category': 'Distribution'},
+        ]
         
         if 'Information Ratio' in data['metrics']:
-            metrics_df = pd.concat([metrics_df, pd.DataFrame([
+            metrics_list.extend([
                 {'Metric': 'Information Ratio', 'Value': f"{data['metrics']['Information Ratio']:.3f}", 'Category': 'Risk-Adjusted'},
-                {'Metric': 'Beta', 'Value': f"{data['metrics']['Beta']:.3f}", 'Category': 'Market Risk'},
-                {'Metric': 'Alpha', 'Value': f"{data['metrics']['Alpha']*100:.2f}%", 'Category': 'Return'}
-            ])], ignore_index=True)
-        
+                {'Metric': 'Beta', 'Value': f"{data['metrics'].get('Beta', 0):.3f}", 'Category': 'Market Risk'},
+                {'Metric': 'Alpha', 'Value': f"{data['metrics'].get('Alpha', 0)*100:.2f}%", 'Category': 'Return'}
+            ])
+            
+        metrics_df = pd.DataFrame(metrics_list)
         st.dataframe(metrics_df, use_container_width=True)
         
         # Download Report
         st.markdown("#### Export Report")
         
-        report_data = {
-            'Portfolio Composition': composition_df,
-            'Risk Metrics': metrics_df,
-            'Correlation Matrix': display_corr
-        }
-        
-        # Create Excel download
-        from io import BytesIO
         output = BytesIO()
-        
         with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-            for sheet_name, df in report_data.items():
-                df.to_excel(writer, sheet_name=sheet_name, index=False if sheet_name != 'Correlation Matrix' else True)
+            composition_df.to_excel(writer, sheet_name='Portfolio Composition', index=False)
+            metrics_df.to_excel(writer, sheet_name='Risk Metrics', index=False)
+            display_corr.to_excel(writer, sheet_name='Correlation Matrix')
         
         excel_data = output.getvalue()
         
@@ -525,7 +526,7 @@ if st.session_state.portfolio_data:
     with tab7:
         st.markdown("### About This Model")
         
-        st.markdown("""
+        st.markdown(f"""
         #### 📊 Portfolio Performance Risk Analysis Framework
         
         This application provides comprehensive risk analysis for equity portfolios using advanced 
@@ -554,25 +555,10 @@ if st.session_state.portfolio_data:
         ##### Methodology:
         
         1. **Data Source**: Real-time stock prices from Yahoo Finance
-        2. **Return Calculation**: Log returns for accurate compounding
+        2. **Return Calculation**: Simple returns based on price change
         3. **Risk Measures**: Historical simulation approach
         4. **Confidence Levels**: 95% and 99% for VaR and ES
         5. **Time Horizon**: Scalable from daily to annual metrics
-        
-        ##### Applications:
-        
-        - Portfolio optimization and rebalancing decisions
-        - Risk budgeting and limit setting
-        - Performance attribution analysis
-        - Regulatory capital calculations
-        - Investment strategy backtesting
-        
-        ##### Technical Implementation:
-        
-        - **Framework**: Streamlit for interactive web interface
-        - **Analytics**: NumPy, Pandas for calculations
-        - **Visualization**: Plotly for interactive charts
-        - **Data**: yFinance for market data access
         
         ---
         
@@ -608,20 +594,17 @@ else:
     
     with col1:
         st.info("""
-        **Step 1: Select Stocks**  
-        Choose stocks from the Nifty 50 index using the sidebar
+        **Step 1: Select Stocks** Choose stocks from the Nifty 50 index using the sidebar
         """)
     
     with col2:
         st.info("""
-        **Step 2: Set Weights**  
-        Allocate portfolio weights (must sum to 100%)
+        **Step 2: Set Weights** Allocate portfolio weights (must sum to 100%)
         """)
     
     with col3:
         st.info("""
-        **Step 3: Analyze**  
-        Click 'Analyze Portfolio' to generate risk metrics
+        **Step 3: Analyze** Click 'Analyze Portfolio' to generate risk metrics
         """)
     
     # Display sample metrics
