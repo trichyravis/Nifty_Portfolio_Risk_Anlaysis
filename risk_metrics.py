@@ -222,6 +222,33 @@ def calculate_portfolio_metrics(stock_data, weights, market_benchmark, risk_free
     return metrics, portfolio_returns
 
 
+def calculate_maximum_drawdown(returns_series):
+    """
+    Calculate maximum drawdown and drawdown series
+    
+    Returns:
+        (max_drawdown, drawdown_series)
+    """
+    if returns_series is None or len(returns_series) == 0:
+        return 0, pd.Series([0])
+    
+    # Ensure it's a pandas Series
+    if not isinstance(returns_series, pd.Series):
+        returns_series = pd.Series(returns_series)
+    
+    # Calculate cumulative returns
+    cumulative = (1 + returns_series).cumprod()
+    running_max = cumulative.cummax()
+    
+    # Calculate drawdown
+    drawdown = (cumulative - running_max) / running_max
+    
+    # Maximum drawdown
+    max_drawdown = drawdown.min()
+    
+    return max_drawdown, drawdown
+
+
 def safe_wrapper(stock_data, weights, market_benchmark, risk_free_rate):
     """Wrapper with error handling for Streamlit"""
     try:
