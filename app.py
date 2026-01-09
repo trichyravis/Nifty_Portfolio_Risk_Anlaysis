@@ -31,7 +31,7 @@ st.set_page_config(
 st.markdown(load_css(), unsafe_allow_html=True)
 
 # ============================================================================
-# SIDEBAR DARK BLUE STYLING
+# SIDEBAR DARK BLUE STYLING (CORRECTED - READABLE INPUT)
 # ============================================================================
 
 st.markdown("""
@@ -51,14 +51,22 @@ st.markdown("""
         color: white !important;
     }
     
-    /* Sidebar Input Text - White */
+    /* Sidebar Input Fields - Dark Text, Light Background */
     [data-testid="stSidebar"] input {
-        color: white !important;
+        color: #000000 !important;
+        background-color: #FFFFFF !important;
     }
     
-    /* Sidebar Select - White */
+    /* Sidebar Number Input - Dark Text, Light Background */
+    [data-testid="stSidebar"] [type="number"] {
+        color: #000000 !important;
+        background-color: #FFFFFF !important;
+    }
+    
+    /* Sidebar Select - Dark Text, Light Background */
     [data-testid="stSidebar"] select {
-        color: white !important;
+        color: #000000 !important;
+        background-color: #FFFFFF !important;
     }
 </style>
 """, unsafe_allow_html=True)
