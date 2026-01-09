@@ -1,7 +1,7 @@
 
 """
-Risk Metrics with correct key names matching app.py expectations
-Uses 'Annual Return' format instead of 'annual_return'
+Risk Metrics with EXACT key names matching your app.py
+Uses shortened names like 'Volatility' instead of 'Annual Volatility'
 """
 
 import numpy as np
@@ -11,14 +11,13 @@ warnings.filterwarnings('ignore')
 
 def calculate_portfolio_metrics(stock_data, weights, market_benchmark, risk_free_rate):
     """
-    Calculate portfolio metrics with CORRECT key names for app.py
+    Calculate portfolio metrics with EXACT key names for your app.py
     
-    Returns metrics with keys like: 'Annual Return', 'Sharpe Ratio', etc.
-    This matches what your app.py expects
+    Returns metrics with keys that EXACTLY match line 197 and beyond in app.py
     """
     
     print("\n" + "█"*70)
-    print("PORTFOLIO METRICS CALCULATION - WITH CORRECT KEY NAMES")
+    print("PORTFOLIO METRICS CALCULATION - EXACT KEY NAMES")
     print("█"*70)
     
     # ========== INPUT VALIDATION ==========
@@ -148,12 +147,12 @@ def calculate_portfolio_metrics(stock_data, weights, market_benchmark, risk_free
     
     calmar = annual_return / abs(max_dd) if max_dd != 0 else 0
     
-    # ========== COMPILE RESULTS WITH CORRECT KEY NAMES ==========
-    # THIS IS THE KEY DIFFERENCE - Using Title Case with Spaces
+    # ========== COMPILE RESULTS WITH EXACT KEY NAMES FOR YOUR app.py ==========
+    # KEY FIX: Using exact key names that your app.py expects at line 197+
     
     metrics = {
-        'Annual Return': float(annual_return),
-        'Annual Volatility': float(annual_volatility),
+        'Return': float(annual_return),
+        'Volatility': float(annual_volatility),
         'Sharpe Ratio': float(sharpe),
         'Sortino Ratio': float(sortino),
         'Calmar Ratio': float(calmar),
@@ -164,7 +163,7 @@ def calculate_portfolio_metrics(stock_data, weights, market_benchmark, risk_free
         'Benchmark Volatility': float(benchmark_volatility),
     }
     
-    print(f"\n[9] METRICS COMPILED")
+    print(f"\n[9] METRICS COMPILED WITH EXACT KEYS")
     print(f"   Keys: {list(metrics.keys())}")
     
     print(f"\n" + "█"*70)
