@@ -200,8 +200,8 @@ def calculate_portfolio_metrics(stock_data, weights, market_benchmark, risk_free
         'Benchmark Volatility': float(benchmark_volatility),
         'VaR 95%': float(var_95),
         'VaR 99%': float(var_99),
-        'CVaR 95%': float(cvar_95),
-        'CVaR 99%': float(cvar_99),
+        'ES 95%': float(cvar_95),           # Expected Shortfall (CVaR) at 95%
+        'ES 99%': float(cvar_99),           # Expected Shortfall (CVaR) at 99%
         'Skewness': float(skewness),
         'Kurtosis': float(kurtosis),
         'Information Ratio': float(info_ratio),
