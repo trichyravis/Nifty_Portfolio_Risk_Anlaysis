@@ -673,3 +673,49 @@ st.markdown("""
     </p>
 </div>
 """, unsafe_allow_html=True)
+# ============================================================================
+# FOOTER
+# ============================================================================
+
+st.divider()
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown("""
+    **📚 Documentation**
+    - User Guide
+    - Risk Metrics
+    - API Reference
+    - FAQ
+    """)
+
+with col2:
+    st.markdown("""
+    **🤝 Support & Contact**
+    - 📧 Email
+    - 🐛 Report Issues
+    - 💡 Feature Requests
+    - 💬 Contact
+    """)
+
+with col3:
+    st.markdown("""
+    **🔗 Connect With Me**
+    - [🔗 LinkedIn](https://www.linkedin.com/in/trichyravis)
+    - [🐙 GitHub](https://github.com/trichyravis/)
+    """)
+
+st.divider()
+
+st.markdown("""
+<div style="text-align: center; color: #666; font-size: 12px; padding: 20px;">
+    <p>
+        <strong>🏔️ The Mountain Path - World of Finance</strong><br>
+        Prof. V. Ravichandran<br>
+        28+ Years Corporate Finance & Banking Experience<br>
+        10+ Years Academic Excellence<br><br>
+        © 2025 The Mountain Path. All rights reserved.
+    </p>
+</div>
+""", unsafe_allow_html=True)
