@@ -670,19 +670,29 @@ else:
 
 st.divider()
 
-st.markdown("""
----
-### 🏔️ THE MOUNTAIN PATH - WORLD OF FINANCE
-
-**Prof. V. Ravichandran** | 28+ Years Finance Experience
-
-🔗 [LinkedIn Profile](https://www.linkedin.com/in/trichyravis) • 🐙 [GitHub](https://github.com/trichyravis/)
-
----
-
-**Disclaimer:** This tool is for educational purposes. Not financial advice. Always consult with a qualified financial advisor before making investment decisions.
-
-📊 Last Updated: 2026-01-09 15:29:33
-
-© 2025 The Mountain Path. All rights reserved.
-""")
+st.markdown(
+    """
+    <div style="text-align: center;">
+        <p style="font-size: 16px; font-weight: bold; color: #003366; margin: 5px 0;">
+            🏔️ THE MOUNTAIN PATH - WORLD OF FINANCE
+        </p>
+        <p style="font-size: 13px; margin: 5px 0;">
+            Prof. V. Ravichandran | 28+ Years Finance Experience
+        </p>
+        <p style="font-size: 13px; margin: 10px 0;">
+            🔗 <a href="https://www.linkedin.com/in/trichyravis" target="_blank" style="color: #003366; text-decoration: none; font-weight: bold;">LinkedIn Profile</a> • 🐙 <a href="https://github.com/trichyravis/" target="_blank" style="color: #003366; text-decoration: none; font-weight: bold;">GitHub</a>
+        </p>
+        <hr style="border: none; border-top: 1px solid #ddd; margin: 10px 0;">
+        <p style="font-size: 12px; margin: 10px 0; color: #666;">
+            <strong>Disclaimer:</strong> This tool is for educational purposes. Not financial advice. Always consult with a qualified financial advisor before making investment decisions.
+        </p>
+        <p style="font-size: 11px; margin: 5px 0; color: #999;">
+            📊 Last Updated: 2026-01-09 15:29:33
+        </p>
+        <p style="font-size: 11px; margin: 5px 0; color: #999;">
+            © 2025 The Mountain Path. All rights reserved.
+        </p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
