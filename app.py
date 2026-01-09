@@ -665,27 +665,76 @@ else:
         st.markdown(f"**{metric}**: {description}")
 
 # ============================================================================
-# FOOTER
+# FOOTER - PROFESSIONAL DESIGN
 # ============================================================================
 
 st.divider()
 
-st.markdown("""
-<div style="text-align: center; padding: 30px 20px;">
-    <h3 style="color: #003366; margin: 0;">🔗 Connect With Me</h3>
-    <p style="margin: 15px 0;">
-        <a href="https://www.linkedin.com/in/trichyravis" style="color: #003366; text-decoration: none; margin: 0 15px; font-weight: bold;">🔗 LinkedIn</a>
-        <a href="https://github.com/trichyravis/" style="color: #003366; text-decoration: none; margin: 0 15px; font-weight: bold;">🐙 GitHub</a>
+st.markdown(f"""
+<div style="text-align: center; padding: 40px 20px;">
+    
+    <!-- Title -->
+    <h2 style="color: #003366; margin: 0; font-size: 24px; font-weight: bold; letter-spacing: 1px;">
+        THE MOUNTAIN PATH - WORLD OF FINANCE
+    </h2>
+    
+    <!-- Subtitle -->
+    <p style="color: #666; font-size: 14px; margin: 10px 0 20px 0;">
+        Advanced Stock Analysis Platform with Five-Lens Framework
     </p>
     
-    <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
+    <!-- Author -->
+    <p style="color: #333; font-size: 13px; margin: 15px 0;">
+        <strong>Prof. V. Ravichandran</strong> | 28+ Years Finance Experience
+    </p>
     
-    <p style="color: #666; font-size: 12px; margin: 0;">
-        <strong>🏔️ The Mountain Path - World of Finance</strong><br>
-        Prof. V. Ravichandran<br>
-        28+ Years Corporate Finance & Banking Experience<br>
-        10+ Years Academic Excellence<br><br>
+    <!-- Buttons -->
+    <div style="margin: 25px 0;">
+        <a href="https://www.linkedin.com/in/trichyravis" target="_blank" style="
+            display: inline-block;
+            background-color: #0077B5;
+            color: white;
+            padding: 10px 25px;
+            margin: 0 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        ">
+            🔗 LinkedIn Profile
+        </a>
+        
+        <a href="https://github.com/trichyravis/" target="_blank" style="
+            display: inline-block;
+            background-color: #333;
+            color: white;
+            padding: 10px 25px;
+            margin: 0 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        ">
+            🐙 GitHub
+        </a>
+    </div>
+    
+    <!-- Disclaimer -->
+    <p style="color: #666; font-size: 12px; margin: 25px 0;">
+        <strong>Disclaimer:</strong> This tool is for educational purposes. Not financial advice. Always consult with a qualified financial advisor before making investment decisions.
+    </p>
+    
+    <!-- Last Updated -->
+    <p style="color: #999; font-size: 11px; margin: 10px 0;">
+        📊 Last Updated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+    </p>
+    
+    <!-- Copyright -->
+    <p style="color: #999; font-size: 11px; margin: 15px 0 0 0;">
         © 2025 The Mountain Path. All rights reserved.
     </p>
+    
 </div>
 """, unsafe_allow_html=True)
