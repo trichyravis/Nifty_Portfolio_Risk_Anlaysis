@@ -670,38 +670,17 @@ else:
 
 st.divider()
 
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    st.markdown("""
-    **📚 Documentation**
-    - User Guide
-    - Risk Metrics
-    - API Reference
-    - FAQ
-    """)
-
-with col2:
-    st.markdown("""
-    **🤝 Support & Contact**
-    - 📧 Email
-    - 🐛 Report Issues
-    - 💡 Feature Requests
-    - 💬 Contact
-    """)
-
-with col3:
-    st.markdown("""
-    **🔗 Connect With Me**
-    - [🔗 LinkedIn](https://www.linkedin.com/in/trichyravis)
-    - [🐙 GitHub](https://github.com/trichyravis/)
-    """)
-
-st.divider()
-
 st.markdown("""
-<div style="text-align: center; color: #666; font-size: 12px; padding: 20px;">
-    <p>
+<div style="text-align: center; padding: 30px 20px;">
+    <h3 style="color: #003366; margin: 0;">🔗 Connect With Me</h3>
+    <p style="margin: 15px 0;">
+        <a href="https://www.linkedin.com/in/trichyravis" style="color: #003366; text-decoration: none; margin: 0 15px; font-weight: bold;">🔗 LinkedIn</a>
+        <a href="https://github.com/trichyravis/" style="color: #003366; text-decoration: none; margin: 0 15px; font-weight: bold;">🐙 GitHub</a>
+    </p>
+    
+    <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
+    
+    <p style="color: #666; font-size: 12px; margin: 0;">
         <strong>🏔️ The Mountain Path - World of Finance</strong><br>
         Prof. V. Ravichandran<br>
         28+ Years Corporate Finance & Banking Experience<br>
