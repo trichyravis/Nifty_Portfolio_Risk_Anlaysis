@@ -1,1 +1,283 @@
 
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual Environments
+venv/
+ENV/
+env/
+.venv
+.ENV
+.env
+venv.bak/
+
+# Streamlit
+.streamlit/secrets.toml
+.streamlit/cache/
+**/cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# IDE - VSCode
+.vscode/
+*.code-workspace
+.history/
+
+# IDE - PyCharm
+.idea/
+*.iml
+*.iws
+out/
+
+# IDE - Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# IDE - Spyder
+.spyderproject
+.spyproject
+
+# IDE - Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+*.vim
+.netrwhist
+*~
+Session.vim
+Sessionx.vim
+
+# OS - macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# OS - Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# OS - Linux
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Data files
+*.csv
+*.xlsx
+*.xls
+*.json
+*.parquet
+*.feather
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.db
+*.sqlite
+*.sqlite3
+data/
+datasets/
+raw_data/
+processed_data/
+cache/
+tmp/
+temp/
+
+# Logs
+*.log
+*.logs
+log/
+logs/
+*.out
+*.err
+
+# Backup files
+*.bak
+*.backup
+*.old
+*.orig
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Documentation build
+docs/_build/
+docs/.doctrees/
+site/
+mkdocs.yml
+
+# Testing
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+cover/
+*.cover
+*.py,cover
+.hypothesis/
+nosetests.xml
+coverage.xml
+*.coveragerc
+.dmypy.json
+dmypy.json
+
+# Package managers
+poetry.lock
+Pipfile.lock
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.development
+.env.test
+*.env
+
+# Config files with sensitive data
+config.ini
+settings.ini
+secrets.yaml
+secrets.yml
+credentials.json
+
+# ML/Data Science specific
+models/
+model_checkpoints/
+*.model
+*.h5
+*.weights
+*.ckpt
+mlruns/
+outputs/
+wandb/
+tensorboard/
+
+# Streamlit specific - additional
+*.streamlit/
+streamlit_cache/
+user_uploads/
+
+# Project specific
+portfolio_exports/
+user_reports/
+*.pdf
+reports/
+exports/
+downloads/
+
+# Compiled documentation
+*.pdf
+*.docx
+*.pptx
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# Certificates and keys
+*.pem
+*.key
+*.crt
+*.cer
+*.der
+*.p12
+*.pfx
+
+# Node (if using any JS/TS)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Miscellaneous
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
+__pypackages__/
+celerybeat-schedule
+celerybeat.pid
+*.sage.py
+instance/
+.webassets-cache
+.scrapy
+target/
+profile_default/
+ipython_config.py
+.python-version
+__pycache__
+.pybuilder/
+.ropeproject
+
+# Don't ignore these important files
+!.gitignore
+!.gitkeep
+!requirements.txt
+!README.md
+!config.py
+!app.py
+!styles.py
+!components.py
+!risk_metrics.py
