@@ -30,6 +30,39 @@ st.set_page_config(
 # Load custom CSS
 st.markdown(load_css(), unsafe_allow_html=True)
 
+# ============================================================================
+# SIDEBAR DARK BLUE STYLING
+# ============================================================================
+
+st.markdown("""
+<style>
+    /* Sidebar Background - Dark Blue */
+    [data-testid="stSidebar"] {
+        background-color: #003366 !important;
+    }
+    
+    /* Sidebar Text - White */
+    [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] {
+        color: white !important;
+    }
+    
+    /* Sidebar Labels - White */
+    [data-testid="stSidebar"] label {
+        color: white !important;
+    }
+    
+    /* Sidebar Input Text - White */
+    [data-testid="stSidebar"] input {
+        color: white !important;
+    }
+    
+    /* Sidebar Select - White */
+    [data-testid="stSidebar"] select {
+        color: white !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # Initialize session state
 if 'portfolio_data' not in st.session_state:
     st.session_state.portfolio_data = None
@@ -623,56 +656,6 @@ else:
     for metric, description in metrics_info.items():
         st.markdown(f"**{metric}**: {description}")
 
-# Footer
-render_footer()
-# ============================================================================
-# FOOTER
-# ============================================================================
-
-st.divider()
-
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    st.markdown("""
-    **📚 Documentation**
-    - [User Guide](#)
-    - [Risk Metrics](#)
-    - [API Reference](#)
-    - [FAQ](#)
-    """)
-
-with col2:
-    st.markdown("""
-    **🤝 Support & Contact**
-    - [📧 Email](mailto:trichyravis@gmail.com)
-    - [🐛 Report Issues](#)
-    - [💡 Feature Requests](#)
-    - [💬 Contact](#)
-    """)
-
-with col3:
-    st.markdown("""
-    **🔗 Connect With Me**
-    - [🔗 LinkedIn](https://www.linkedin.com/in/trichyravis)
-    - [🐙 GitHub](https://github.com/trichyravis/)
-    - [🐦 Twitter](#)
-    - [📱 WhatsApp](#)
-    """)
-
-st.divider()
-
-st.markdown("""
-<div style="text-align: center; color: #666; font-size: 12px; padding: 20px;">
-    <p>
-        <strong>🏔️ The Mountain Path - World of Finance</strong><br>
-        Prof. V. Ravichandran<br>
-        28+ Years Corporate Finance & Banking Experience<br>
-        10+ Years Academic Excellence<br><br>
-        © 2025 The Mountain Path. All rights reserved.
-    </p>
-</div>
-""", unsafe_allow_html=True)
 # ============================================================================
 # FOOTER
 # ============================================================================
